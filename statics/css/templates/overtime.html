@@ -1,0 +1,122 @@
+{include file='header.html'}
+{include file='left.html'}
+<div id="main" class="pad-top" style="margin-top: -750px;font-size: 16px">
+    <div class="cute-12-phone"><a onclick="history.go(-1);" style="cursor:pointer" class="cute-12-phone back-button">{$lang.global_back}</a></div>
+    <form id="account-form" class="cute-12-phone" action="" method="post" onsubmit="return chkfrm()">
+        <!--<div class="cute-4-phone">
+            <select name="oinfo[group_id]" >
+                <option value="41">研发部</option>
+                &lt;!&ndash;<option value="36" {if $operator.group_id == 36} selected="selected" {/if}>{$lang.team_leader}</option>&ndash;&gt;
+                <option value="33" >市场部</option>
+            </select>
+        </div>-->
+        <p style="font-size: 20px">加班人：{$member_name}</p>
+        <div class="cute-2-phone"><label>加班日期</label></div>
+
+        <div class="cute-4-phone">
+            <input name="ot_info[date]"  id="date" value="{$ot_info.date}" onclick="{literal}WdatePicker({skin:'whyGreen',lang:'en'}){/literal}" />
+        </div>
+
+
+        <div class="cute-2-phone"><label>加班事由</label></div>
+        <div class="cute-4-phone">
+            <input name="ot_info[reason]" id="reason"  type="text" value="{$ot_info.reason}" />
+        </div>
+
+        <div class="cute-2-phone"><label>开始时间</label></div>
+        <div class="cute-4-phone">
+            <input name="ot_info[start_time]" id="start_time"  onclick="{literal}WdatePicker({skin:'whyGreen',dateFmt:'HH:mm',lang:'en'}){/literal}"  value="{$ot_info.start_time}"/>
+        </div>
+
+
+        <div class="cute-2-phone"><label>结束时间</label></div>
+        <div class="cute-4-phone">
+            <input name="ot_info[end_time]" id="end_time"   onclick="{literal}WdatePicker({skin:'whyGreen',dateFmt:'HH:mm',lang:'en'}){/literal}"  value="{$ot_info.end_time}"/>
+        </div>
+
+        <div class="cute-2-phone"><label>时长</label></div>
+        <div class="cute-4-phone" style="right:518px">
+            <input name="ot_info[time]" id="time"  type="text" value="{$ot_info.time}" placeholder="只填数字即可"/>
+        </div>
+
+        <br class="clear">
+
+        <input type="button" class="cute-6-phone cancel-button" value="{$lang.global_cancel}" onclick="history.go(-1);">
+        <input type="submit" class="cute-6-phone accept-button" value="{$lang.global_save}">
+
+    </form>
+
+    <script language="javascript">
+        var user_id = '{$operator.id}';
+        var msg4 = '{$lang.contact_msg1}';
+        var msg5 = '{$lang.contact_msg2}';
+        var msg7 = '{$lang.password_msg}';
+        var operator_id = '{$operator.id}';
+
+    </script>
+    {literal}
+    <script language="javascript">
+        function chkfrm(){
+            if($('#date').val()==''){
+                alert("日期不能为空");
+                return false;
+            }
+            if($('#reason').val()==''){
+                alert("事由不能为空");
+                return false;
+            }
+            if($('#start_time').val()==''){
+                alert("开始时间不能为空");
+                return false;
+            }
+            if($('#end_time').val()==''){
+                alert("结束时间不能为空");
+                return false;
+            }
+            if($('#time').val()==''){
+                alert("时长不能为空");
+                return false;
+            }
+
+            return true;
+        }
+
+
+        $(document).ready(function() {
+            $('#first_name').bind('change',function(){
+                var login_name = $(this).val();
+                login_name = $('#last_name').val()?login_name+'_'+$('#last_name').val():login_name;
+                $('#login_name').val(login_name);
+
+            });
+
+            $('#last_name').bind('change',function(){
+                var login_name = $(this).val();
+                login_name = $('#first_name').val()?$('#first_name').val()+'_'+login_name:login_name;
+                $('#login_name').val(login_name);
+            });
+
+            $('#first_name,#last_name').bind('change',function(){
+                var login_name = $('#first_name').val();
+                login_name = $('#last_name').val()?login_name+'_'+$('#last_name').val():login_name;
+                user_number(login_name);
+            })
+        });
+        function user_number(uname){
+            uname = uname.replace( /\s*$/g,"");
+            if(uname=='')
+                return;
+            $.ajax({
+                type:'GET',
+                url:'user.php',
+                data:'action=getuseno&uname='+uname+'&user_id='+user_id,
+                success: function(number){
+                    if(number > 0) {
+                        //$('#usermsg').html(uname+'_'+number);
+                        $('#login_name').val(uname+'_'+number);
+                    }
+                }
+            });
+        }
+    </script>
+    {/literal}

@@ -1,0 +1,337 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>微信自动回复</title>
+<link href="../../images/favicon.ico" type="image/ico" rel="shortcut icon" />
+<link href="../../css/base.css" type="text/css" rel="stylesheet" />
+<link href="../../css/index.css" type="text/css" rel="stylesheet" />
+<link href="../../css/weixin.css" type="text/css" rel="stylesheet" />
+<script src="../../scripts/jquery-1.8.2.min.js" type="text/javascript"></script>
+<script src="../../layer/layer.js" type="text/javascript"></script>
+<script src="../../scripts/common.js" type="text/javascript"></script>
+</head>
+<body class="grey_body">
+<div class="wrapper">
+
+    <!-- 头部 开始 -->
+    <div class="head">
+        <div class="inner pre">
+
+     	    	<!-- logo 开始 -->
+    <div class="topmenu-logo pre">            
+        <span class="alogo logo_work " ></span>
+        <span class="logo_arrow pa"></span>
+        <ul class="logo_menu">            <li style="display: none;">
+                <a href="../agent/apply_list_p.html">平台管理</a>
+            </li>
+            <li>
+                <a href="../../manager_corp.html">代理商平台</a>
+            </li>
+            <li>
+                <a href="../baseinfo/baseinfo_details.html">企业平台</a>
+            </li>
+        </ul>
+    </div>
+<!-- logo end -->
+
+            <!-- 菜单 开始 -->
+            <div class="top_menu pa">
+                <ul>
+                    <li class="active"><a href="../library/library.html">媒体管理</a></li>
+                    <li><a href="../reception/reception.html">工作台</a></li>
+                    <li><a href="../sms/sms_send.html">联系人管理</a></li>
+                    <li><a href="../customer/contact_list.html">沟通记录</a></li>
+                    <li><a href="../customer/user_count.html">数据统计</a></li>
+                    <li><a href="../phonetalk10/repository.html">知识库</a></li>
+                </ul>
+            </div>
+            <!-- 菜单 end -->
+			
+			<!-- 用户 开始 -->
+			<dl class="user_dl pa">
+				<dt>
+					<img src="../../images/pic.jpg" alt="" />
+					<a href="javascript:void(0)" class="user_bg pa"></a>
+				</dt>
+				<dd>老板</dd>
+			</dl>
+			<!-- 用户 end -->
+
+             
+
+        </div>
+    </div>
+    <!-- 头部 end -->
+
+    <!-- 内容 开始 -->
+    <div class="content">
+
+    	<!-- 左边菜单 开始 -->
+    	<div class="left_box">
+    		<div class="menu">
+    			<ul class="u_out">
+    				<li>
+    					<a href="javascript:void(0)" class="icon_10">群发操作</a>
+
+    					<!-- 二级菜单 开始 -->
+    					<ul class="u_inner">
+    						<li><a href="../library/bulk.html">群发消息</a></li>
+    					</ul>
+    					<!-- 二级菜单 end -->
+
+    				</li>
+    				<li>
+    					<a href="javascript:void(0)" class="icon_11">自动回复</a>
+    					<ul class="u_inner">
+    						<li class="active"><a href="../weixin/reply_list.html">自动回复</a></li>
+                            <li><a href="../weixin/reply_public.html">公共回复</a></li>
+    					</ul>
+    				</li>
+                    <li>
+                        <a href="javascript:void(0)" class="icon_11">素材管理</a>
+                        <ul class="u_inner">
+                            <li><a href="../library/library.html">素材库</a></li>
+                        </ul>
+                    </li>
+    			</ul>
+    		</div>
+    	</div>
+    	<!-- 左边菜单 end -->
+
+    	<!-- 右边内容 开始 -->
+    	<div class="right_box">
+
+            <!-- 微信自动回复 开始 -->
+            <div class="wx_public">
+                <div class="title_box">
+                    <a href="reply_add.html" class="btn e_btn flr">
+                        <span><i></i>新增关键字回复</span>
+                    </a>
+                    <h2 class="h2">微信自动回复</h2>  
+                </div>
+
+                <div class="bulk">
+                    
+                    <div class="add_bulk">
+                        
+                        <!-- 筛选条件 开始 -->
+                        <div class="filer_box">
+                            <table class="tab">
+                                <thead>
+                                    <tr>
+                                        <th width="8%">自动回复：</th>
+                                        <td width="92%">
+                                            <ul class="head_serch flr">
+                                                <li><input type="text" class="a_ipt" placeholder="在结果中搜索" /></li>
+                                                <li><a href="javascript:void(0)" class="btn">搜索</a></li>
+                                            </ul>
+                                            <span class="filer_num">共<em>599</em>个</span>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>渠道：</th>
+                                        <td>
+                                            <ul class="data_select data_ul" id="data_select">
+                                                <li class="active"><a href="javascript:void(0)">全部</a></li>
+                                                <li><a href="javascript:void(0)">微信</a></li>
+                                                <li><a href="javascript:void(0)">微博</a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- 筛选条件 end -->
+                        
+                        <!-- 自动回复列表 开始 -->
+                        <div class="auto_reply">
+                            <table class="tab">
+                                <thead>
+                                    <tr>
+                                        <th width="10%">渠道</th>
+                                        <th width="15%">回复类型</th>
+                                        <th width="15%">规则</th>
+                                        <th width="50%">内容</th>
+                                        <th width="10%">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>微信</td>
+                                        <td>关注后自动回复</td>
+                                        <td>每次关注</td>
+                                        <td><p>【图片】谢谢关注.jpg</p></td>
+                                        <td>
+                                            <div class="a_box">
+                                                <a href="reply_edit.html" class="edit"></a>
+                                                <!-- <a href="javascript:void(0)" class="del"></a> -->
+                                                <a href="javascript:void(0)" class="pre slide">
+                                                    <span class="lsp"></span>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>微信</td>
+                                        <td>消息自动回复</td>
+                                        <td>60分钟内触发一次</td>
+                                        <td>
+                                            <p>【文字】感谢您的关注</p>
+                                            <p>小编离开一下，第一时间给您回复</p>                                            
+                                        </td>
+                                        <td>
+                                            <div class="a_box">
+                                                <a href="reply_edit.html" class="edit"></a>
+                                                <!-- <a href="javascript:void(0)" class="del"></a> -->
+                                                <a href="javascript:void(0)" class="pre slide">
+                                                    <span class="lsp"></span>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>微信</td>
+                                        <td>客服接入回复</td>
+                                        <td>每次接入</td>
+                                        <td>
+                                        	<p>【文字】您好，欢迎来到远航物流</p>
+                                        	<p>我是客服小米，很高兴为您服务</p>
+                                        </td>
+                                        <td>
+                                            <div class="a_box">
+                                                <a href="reply_edit.html" class="edit"></a>
+                                                <!-- <a href="javascript:void(0)" class="del"></a> -->
+                                                <a href="javascript:void(0)" class="pre slide">
+                                                    <span class="lsp"></span>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>微信</td>
+                                        <td>关键字自动回复</td>
+                                        <td>【关键字】活动咨询</td>
+                                        <td>
+                                        	<p>【音频】您好，我们将推出春节最新优惠活动</p>
+                                        	<p>敬请关注，将持续更新.MP3</p>
+                                        </td>
+                                        <td>
+                                            <div class="a_box">
+                                                <a href="reply_edit.html" class="edit"></a>
+                                                <a href="javascript:void(0)" class="del"></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>微信</td>
+                                        <td>关键字自动回复</td>
+                                        <td>【关键字】活动咨询</td>
+                                        <td><p>【图片】春节促销大酬宾.JPG</p></td>
+                                        <td>
+                                            <div class="a_box">
+                                                <a href="reply_edit.html" class="edit"></a>
+                                                <a href="javascript:void(0)" class="del"></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- 自动回复列表 end -->
+
+                        <!-- 分页 开始 -->
+                        <div class="pageList">
+                            <ul>
+                                <li><a href="javascript:void(0)" class="prev">&laquo;</a></li>
+                                <li><a href="javascript:void(0)">1</a></li>
+                                <li><a href="javascript:void(0)">2</a></li>
+                                <li><a href="javascript:void(0)">3</a></li>
+                                <li><a href="javascript:void(0)">4</a></li>
+                                <li><a href="javascript:void(0)">5</a></li>
+                                <li><a href="javascript:void(0)" class="next">&raquo;</a></li>
+                                <li><input type="text" class="a_ipt" /></li>
+                                <li><a href="javascript:void(0)" class="go">GO</a></li>
+                            </ul>    
+                        </div>
+                        <!-- 分页 end -->
+                        
+
+                    </div>
+                </div>
+
+            </div>
+            <!-- 微信自动回复 end -->
+
+    	</div>
+    	<!-- 右边内容 end -->
+
+    </div>
+    <!-- 内容 end -->
+
+</div>
+</body>
+<script>
+$(document).ready(function(){
+
+    //左右容器高度自适应
+    setHeight();
+
+    //单选
+    $('#data_select li a').live('click',function(){
+        $(this).parent('li').addClass('active').siblings('li').removeClass('active');
+    });
+
+    //表格隔行换色
+    $('.auto_reply .tab tbody tr:odd').css({'background':'#f8f8f8'});
+
+    //绑定删除事件
+    $('.a_box .del').live('click',function(){
+        var sfather = $(this).parents('tr');
+        layer.alert('<span class="qf_txt" style="margin-top:30px;">确认删除此条信息？</span>', {
+        	type:1,
+            title:'提示',
+            area:['360px','189px'],
+            closeBtn:false,
+            btn:['确　定','取　消'],
+            yes:function(){
+                sfather.remove();
+                layer.closeAll();
+            },
+            cancel:function(){
+                layer.closeAll();
+            }
+        }) 
+    });
+
+    //滑动门
+    $('.slide').live('click',function(){
+        if($(this).hasClass('slide_focus')){
+            $(this).find('.lsp').animate({'left':'-1px'},300);  
+            $(this).removeClass('slide_focus');
+        }else{
+            $(this).find('.lsp').animate({'left':'7px'},300);
+            $(this).addClass('slide_focus');
+        } 
+    });
+
+
+
+
+})
+
+//左右容器高度自适应
+function setHeight(){
+    var leftH = $('.left_box').height();
+    var rightH = $('.right_box').height();
+    if(rightH>leftH){
+        $('.left_box').height(rightH);
+    }else{
+        $('.right_box').height(leftH);
+    };
+};
+
+</script>
+</html>

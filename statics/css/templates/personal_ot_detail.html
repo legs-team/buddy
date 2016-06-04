@@ -1,0 +1,229 @@
+<!--<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>个人加班明细</title>
+    <meta name="description" content="Leverage Point">
+    <meta name="author" content="Isaac Vigil">
+
+    &lt;!&ndash; Css &ndash;&gt;
+    <link rel="stylesheet" href="lp2/css/normalize.css">
+    <link rel="stylesheet" href="lp2/css/cutegrids.css">
+    <link rel="stylesheet" href="lp2/css/main.css?v=003">
+    <link href='/lp2/css/css?family=PT+Sans:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+    &lt;!&ndash; Javascript &ndash;&gt;
+
+    <script type="text/javascript" src="lp2/javascript/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="lp2/javascript/main.js"></script>
+    <script type="text/javascript" src="/js/DatePicker/WdatePicker.js"></script>
+
+    &lt;!&ndash; Css Javascript Resources &ndash;&gt;
+
+    <script src="/js/audiojs/audio.min.js?v={$version}"></script>
+    <script type="text/javascript">
+        var myDate = new Date();
+        var yDate = myDate.getFullYear()+'-' + (parseInt(myDate.getMonth())+1) + '-' + (myDate.getDate());
+    </script>
+
+</head>
+<body>-->
+<title>个人加班明细</title>
+{include file="header.html"}
+{include file="left.html"}
+<div id="main" class="live-monitoring" style="margin-top: -750px;font-size: 16px">
+    <div class="cute-12-phone">
+        <h1 class="cute-12-phone">{$member_name}加班明细</h1>
+        <br class="clear" />
+
+        <form name="callList" id="ot_detail" method="get">
+            <input type="hidden" name="action" value="check_ot">
+            <input type="hidden" name="member_id" value="{$member_id}">
+            <div class="cute-2-phone first-element left">
+                <input name="start_date" type="text" value="{$start_date}" onclick="{literal}WdatePicker({skin:'whyGreen',maxDate:yDate,lang:'en',onpicked:function(){searchSubmit();}}){/literal}" class="date-input" placeholder="{$lang.start_date}"/>
+            </div>
+            <div class="cute-2-phone first-element left">
+                <input name="end_date" type="text" value="{$end_date}" onclick="{literal}WdatePicker({skin:'whyGreen',maxDate:yDate,lang:'en',onpicked:function(){searchSubmit();}}){/literal}" class="date-input" placeholder="{$lang.end_date}"/>
+            </div>
+
+
+
+            <ul class="results-list call-history-list">
+                <li class="list-titles">
+                    <ul>
+                        <li class="cute-1-phone" >序号</li>
+                        <li class="cute-1-phone" style="margin-left: -20px;">日期</li>
+                        <li class="cute-1-phone" >事由</li>
+                        <li class="cute-1-phone" style="margin-left:40px;">开始时间</li>
+                        <li class="cute-1-phone" style="margin-left: 40px;">结束时间</li>
+                        <li class="cute-1-phone" style="right:80px;">时长</li>
+                    </ul>
+
+                </li>
+                {foreach item=detail from=$otlist}
+                <li>
+                    <ul>
+                        <li class="cute-1-phone" >{$detail.id}</li>
+                        <li class="cute-1-phone" style="margin-left: -20px;">{$detail.date}</li>
+                        <li class="cute-1-phone" >{$detail.reason}</li>
+                        <li class="cute-1-phone" style="margin-left: 50px;">{$detail.start_time}</li>
+                        <li class="cute-1-phone" style="margin-left: 50px;">{$detail.end_time}</li>
+                        {if $smarty.session.is_admin_kq==1}
+                        <li class="cute-1-phone" style="left:75px;">{$detail.time}</li>
+                        {else}<li class="cute-1-phone" style="right:75px;">{$detail.time}</li>
+                        {/if}
+                        {if $smarty.session.is_admin_kq==1}
+                        <li class="cute-1-phone "  style=""><a href="javascript:none;" class="more-link add_more_menu_link" >&nbsp;</a></li>
+                        {/if}
+                    </ul>
+
+                    {if $smarty.session.is_admin_kq==1}
+                    <ul class="sub-menu">
+                        <li class="main-button edit-btn">
+                            <a href="members.php?action=edit_ot&member_id={$member_id}&id={$detail.id}&start_date={$start_date}&end_date={$end_date}&page={$page}&entries={$entries}&d=0" class="sub-menu-icon">编辑</a>
+                        </li>
+                        <li class="main-button unapprove-btn resigned "><a  href="javascript:void(0)" class="sub-menu-icon" id="{$detail.id}" detail_date="{$detail.date}" member_name="{$member_name}">删除</a></li>
+                    </ul>
+                    {/if}
+                </li>
+
+                {/foreach}
+
+            </ul>
+            <form action="members.php">
+
+                <input type="hidden" id="pageTotal" value="{$total_number|default:0}" />
+                <section class="cute-7-phone"><h2 class="cute-12-phone">{$lang.page_total} {$total_number|default:0} {$lang.page_call_history}</h2></section>
+                <section class="cute-5-phone navigation">
+                    <a class="next-button" href="javascript:">&nbsp;</a>
+                    <input name="page" value="{$page}" min="1" type="number" class="page-selector" onchange="$(this).parents('form').submit();"/>
+                    <a class="prev-button" href="javascript:">&nbsp;</a>
+                    <select name="entries" onchange="$('input[name=page]').val(1);$(this).parents('form').submit();">
+                        <option value="30" >30 {$lang.entries}</option>
+                        <option value="50" {if $entries == 50} selected="selected" {/if}>50 {$lang.entries}</option>
+                        <option value="100" {if $entries == 100} selected="selected" {/if}>100 {$lang.entries}</option>
+                        <option value="150" {if $entries == 150} selected="selected" {/if}>150 {$lang.entries}</option>
+                    </select>
+                </section>
+            </form>
+    </div>
+
+</body>
+</html>
+
+{literal}
+<script language="javascript">
+
+    function searchSubmit(){
+        $('input[name=page]').val(1);
+        $('form[name=callList]').submit();
+    }
+
+    var start_index = 0;
+    var end_index = -1;
+    function time_to_int(time) {
+        var arr = time.split(":");
+        var min = parseInt(arr[0]);
+        var sec = parseInt(arr[1]);
+
+        var total = min*60+sec;
+        return parseInt(total);
+    }
+    $(document).ready(function() {
+
+        $('.unapprove-btn .sub-menu-icon').click(function() {
+            var member_name   = $(this).attr('member_name');
+            var detail_date = $(this).attr('detail_date');
+            var id = $(this).attr('id');
+            var ensure = confirm("确定删除"+member_name+" "+detail_date+"这条加班记录吗？");
+            if (ensure) {
+                $.get("members.php",{action:'delete1',id:id},function(){
+                    $('#ot_detail').submit();
+                });
+            }else
+            {
+                return false;
+            }
+
+        });
+
+        $(document).bind('click',function(e){
+
+            var container = $(".sub-menu, .add_more_menu_link");
+            if (!container.is(e.target)&& container.has(e.target).length === 0) {
+                $("li").removeClass('on');
+            }
+        });
+
+        $(".popup-box").on("click",function(e){
+            return false;
+        });
+
+        $(".recording").on("click",function(e){
+            e.preventDefault();
+            var text = $(this).parent().parent().find('em.played');
+
+            if(!$(this).parent().siblings('.audiojs').hasClass('playing'))
+                return false;
+
+            if($(this).hasClass('start_record'))
+            {
+                $(this).attr('title',end_cutting);
+                start_index = time_to_int(text.text());
+                $("input[name=start_index]").val(start_index);
+                $(this).removeClass('start_record').addClass('end_record');
+                return false;
+            }else
+            {
+                $(this).attr('title',start_cutting);
+                end_index = time_to_int(text.text());
+
+                $(this).removeClass('end_record').addClass('start_record');
+                $("input[name=end_index]").val(end_index);
+                $(this).parents('form[name=record]').submit();
+            }
+
+        });
+
+        $("a.add_more_menu_link").click(function(){
+
+            var $ul = $(this).closest('ul');
+            var $li = $ul.parent();
+            $li.toggleClass('on').siblings().removeClass('on');
+            $ul.next('ul').css({"right":"11px","margin-top":$li.height()});
+        });
+
+        $('li.listen-btn').click(function(){
+
+            var btn_link=$(this).find('.sub-menu-icon');
+            btn_link.siblings('.play-call-record').toggleClass('play-hidden');
+
+            var sibelem = btn_link.siblings('div');
+            var voice = btn_link.attr('voice');
+            if(sibelem.find('.audiojs').length>0)
+                return false;
+            var that = sibelem.find('audio');
+            that.attr("src",voice);
+
+            if(window.audiojs){
+                audiojs.create(that);
+            }
+
+        });
+
+        $('.next-button').bind('click',function(){
+            if (parseInt($('input[name=page]').val()) * parseInt($('input[name=entries]').val()) < parseInt($('#pageTotal').val())) {
+                $('input[name=page]').val( parseInt($('input[name=page]').val())+1 );
+                $(this).parents('form').submit();
+            }
+        })
+        $('.prev-button').bind('click',function(){
+            var page = parseInt($('input[name=page]').val());
+            if(page > 1){
+                $('input[name=page]').val(page-1)
+                $(this).parents('form').submit();
+            }
+        })
+    });
+</script>
+{/literal}

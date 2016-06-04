@@ -1,0 +1,182 @@
+{include file='header.html'}
+{include file='left.html'}
+<title>请假汇总</title>
+
+<div id="main" class="live-monitoring" style="margin-top: -750px;font-size: 16px">
+    <div class="cute-12-phone">
+        <h1 class="cute-12-phone">请假明细</h1>
+        <br class="clear" />
+
+        <form name="generate" action="generate.php?action=ask" method="post" onsubmit="return chkfrm()" style="font-size: 16px;">
+
+            <div >
+                <p >请输入年月，格式为XXXX/XX (个位数的月份也要输成两位，比如1输成01)</p>
+                <input id="shuru" type="text" name="mon" placeholder="请输入年月" style="width: 166px;"/>
+                <input type="submit" value="生成请假汇总表" style="width: 166px;margin-top: 10px;margin-left: 7px"/>
+            </div>
+        </form>
+
+        <form name="callList" id="myform" method="get">
+            <input type="hidden" name="action" value="qingjia_huizong">
+            <!--<input type="hidden" name="member_id" value="{$member_id}">-->
+
+            <div class="cute-2-phone">
+                <select name="members" onchange="searchSubmit()">
+                    <option value="">{$lang.all_members}</option>
+                    {section name=member loop=$membersList}
+                    <option value="{$membersList[member].login_name}" {if $members == $membersList[member].login_name} selected="selected" {/if}>{$membersList[member].login_name}</option>
+                    {/section}
+                </select>
+            </div>
+
+            <div class="cute-2-phone first-element left">
+                <input name="start_date" type="text" value="{$start_date}" onclick="{literal}WdatePicker({skin:'whyGreen',maxDate:yDate,lang:'en',onpicked:function(){searchSubmit();}}){/literal}" class="date-input" placeholder="{$lang.start_date}"/>
+            </div>
+            <div class="cute-2-phone first-element left">
+                <input name="end_date" type="text" value="{$end_date}" onclick="{literal}WdatePicker({skin:'whyGreen',maxDate:yDate,lang:'en',onpicked:function(){searchSubmit();}}){/literal}" class="date-input" placeholder="{$lang.end_date}"/>
+            </div>
+
+
+
+            <ul class="results-list call-history-list">
+                <li class="list-titles">
+                    <ul>
+                        <li class="cute-1-phone" >序号</li>
+                        <li class="cute-1-phone" style="margin-left: -40px;">姓名</li>
+                        <li class="cute-1-phone" style="margin-left: -20px;">假别</li>
+                        <li class="cute-1-phone" style="margin-left: -45px;">事由</li>
+                        <li class="cute-1-phone" style="margin-left: -20px;">开始日期</li>
+                        <li class="cute-1-phone" style="margin-left: -20px;">开始时间</li>
+                        <li class="cute-1-phone" style="margin-left: -5px;">结束日期</li>
+                        <li class="cute-1-phone" style="margin-left: -5px;">结束时间</li>
+                        <li class="cute-1-phone" style="margin-left: -100px">时长</li>
+                    </ul>
+
+                </li>
+                {foreach item=detail from=$detaillist}
+                <li>
+                    <ul>
+                        <li class="cute-1-phone" >{$detail.id}</li>
+                        <li class="cute-1-phone" style="margin-left: -40px;">{$detail.login_name}</li>
+                        <li class="cute-1-phone" style="margin-left: -20px;">{$detail.type}</li>
+                        <li class="cute-1-phone" style="margin-left: -50px;">{$detail.reason}</li>
+                        <li class="cute-1-phone" style="margin-left: -20px;">{$detail.start_date}</li>
+                        <li class="cute-1-phone" >{$detail.start_time}</li>
+                        <li class="cute-1-phone" style="margin-left: -20px;">{$detail.end_date}</li>
+                        <li class="cute-1-phone" >{$detail.end_time}</li>
+                        <li class="cute-1-phone" style="margin-left: -30px;">{$detail.time}</li>
+                        {if $smarty.session.is_admin_kq==1}
+                        <li class="cute-1-phone "  style="margin-top: -38px;"><a href="javascript:none;" class="more-link add_more_menu_link" >&nbsp;</a></li>
+                        {/if}
+                    </ul>
+
+                    {if $smarty.session.is_admin_kq==1}
+                    <ul class="sub-menu">
+                        <li class="main-button edit-btn">
+                            <a href="members.php?action=edit&member_id={$detail.attendance_id}&id={$detail.id}&start_date={$start_date}&end_date={$end_date}&page={$page}&entries={$entries}&d=1" class="sub-menu-icon">编辑</a>
+                        </li>
+                        <li class="main-button unapprove-btn resigned "><a  href="javascript:void(0)" class="sub-menu-icon" id="{$detail.id}" >删除</a></li>
+                    </ul>
+                    {/if}
+                </li>
+                {/foreach}
+
+            </ul>
+
+            <form action="members.php">
+                <input type="hidden" id="pageTotal" value="{$total_number|default:0}" />
+                <section class="cute-7-phone"><h2 class="cute-12-phone">{$lang.page_total} {$total_number|default:0} {$lang.page_call_history}</h2></section>
+                <section class="cute-5-phone navigation">
+                    <a class="next-button" href="javascript:">&nbsp;</a>
+                    <input name="page" value="{$page}" min="1" type="number" class="page-selector" onchange="$(this).parents('form').submit();"/>
+                    <a class="prev-button" href="javascript:">&nbsp;</a>
+                    <select name="entries" onchange="$('input[name=page]').val(1);$(this).parents('form').submit();">
+                        <option value="30" >30 {$lang.entries}</option>
+                        <option value="50" {if $entries == 50} selected="selected" {/if}>50 {$lang.entries}</option>
+                        <option value="100" {if $entries == 100} selected="selected" {/if}>100 {$lang.entries}</option>
+                        <option value="150" {if $entries == 150} selected="selected" {/if}>150 {$lang.entries}</option>
+                    </select>
+                </section>
+            </form>
+    </div>
+
+
+
+<body>
+<html>
+
+{literal}
+<script language="javascript">
+
+    function chkfrm() {
+        var shuru = document.getElementById( "shuru" );
+        if(shuru.value.replace( /\s/g, "" ) == "") {
+            alert("年月不能为空，请输入年月");
+            return false;
+        }
+        setTimeout( function(){
+            location.reload();
+        },2000);
+        return true;
+    }
+
+    function searchSubmit(){
+        $('input[name=page]').val(1);
+        $('form[name=callList]').submit();
+    }
+
+    $(document).ready(function() {
+
+        $('.unapprove-btn .sub-menu-icon').click(function() {
+            /*var member_name   = $(this).attr('member_name');
+            var detail_date = $(this).attr('detail_date');*/
+            var id = $(this).attr('id');
+            var ensure = confirm("确定删除这条请假记录吗？");
+            if (ensure) {
+                $.get("members.php",{action:'delete',id:id},function(){
+                    $('#myform').submit();
+                });
+            }else
+            {
+                return false;
+            }
+
+        });
+
+        $(document).bind('click',function(e){
+
+            var container = $(".sub-menu, .add_more_menu_link");
+            if (!container.is(e.target)&& container.has(e.target).length === 0) {
+                $("li").removeClass('on');
+            }
+        });
+
+        $(".popup-box").on("click",function(e){
+            return false;
+        });
+
+
+        $("a.add_more_menu_link").click(function(){
+
+            var $ul = $(this).closest('ul');
+            var $li = $ul.parent();
+            $li.toggleClass('on').siblings().removeClass('on');
+            $ul.next('ul').css({"right":"11px","margin-top":$li.height()});
+        });
+
+        $('.next-button').bind('click',function(){
+            if (parseInt($('input[name=page]').val()) * parseInt($('input[name=entries]').val()) < parseInt($('#pageTotal').val())) {
+                $('input[name=page]').val( parseInt($('input[name=page]').val())+1 );
+                $(this).parents('form').submit();
+            }
+        })
+        $('.prev-button').bind('click',function(){
+            var page = parseInt($('input[name=page]').val());
+            if(page > 1){
+                $('input[name=page]').val(page-1)
+                $(this).parents('form').submit();
+            }
+        })
+    });
+</script>
+{/literal}

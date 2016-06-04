@@ -1,0 +1,84 @@
+body {
+  background-color: #414350;
+  font-family: 'AsapRegular', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+}
+#loginBox {
+  margin: 20% auto;
+  width: 400px;
+  height: 175px;
+  text-align: center;
+  overflow: visible;
+}
+#logo {
+  width: ;
+  height: ;
+  margin: 20px;
+  background: url([object Object]);
+  text-align: center;
+  position: relative;
+  left: -23px;
+}
+.loginButton {
+  border-radius: 50px;
+  float: right;
+  position: relative;
+  top: 36px;
+  left: -17px;
+}
+.loginButton a {
+  display: block;
+  height: 70px;
+  width: 70px;
+  background: url('../../../images/v2/login-button.png');
+}
+.loginRoundRect {
+  width: 330px;
+  height: 150px;
+  background: #E2E1E9;
+  border-radius: 25px;
+  border: 10px solid #5F6273;
+}
+.loginRoundRect table {
+  width: 300px;
+  height: 90px;
+  padding: 10px;
+  /* Training Checkbox*/
+
+}
+.loginRoundRect table .username,
+.loginRoundRect table .password {
+  border-bottom: 2px solid #a4abbf;
+}
+.loginRoundRect table input {
+  border: none;
+  background-color: inherit;
+  height: 28px;
+  width: 280px;
+}
+.loginRoundRect table input[type=checkbox] {
+  opacity: 1;
+  width: auto;
+  margin: 0;
+  float: left;
+}
+.loginRoundRect table label {
+  font-size: 12px;
+  background: none;
+  margin: 10px;
+  line-height: 10px !important;
+  float: left;
+}
+.loginRoundRect table input[type=checkbox]:checked + label {
+  background: none;
+}
+.training-checkbox {
+  margin: 10px 0 0 100px;
+  text-align: center;
+}
+#loginFooter {
+  position: relative;
+  left: -20px;
+  top: 20px;
+  color: #a4abbf;
+}

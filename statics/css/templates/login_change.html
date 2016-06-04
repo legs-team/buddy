@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+    <script language="javascript">
+        var msg1 = '请输入用户名';
+        var msg2 = '请输入密码';
+        var msg3 = '3';
+        var msg4 = '4';
+        var msg5 = '5';
+        var msg6 = '登录名不存在或者密码错误。请重新登录。';
+        var msg7 = '78';
+
+    </script>
+    {literal}
+    <style  type="text/css">
+        body{
+            background-color: #414350 !important;
+        }
+        #popup-bg {
+            background: rgba(0, 0, 0, 0.8);
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: none;
+            position: fixed;
+            z-index: 100;
+        }
+        .popup-agreement {
+            display: none;
+            position: fixed;
+            top: 15%;
+            bottom: 15%;
+            left: 50%;
+            z-index: 101;
+            width: 1080px;
+            margin-left: -540px;
+            background-color: #fff;
+            overflow: auto;
+        }
+        .popup-agreement .close{
+            float: right;
+            display: block;
+            width: 40px;
+            height:40px;
+        }
+        .popup-agreement .close img{
+            width: 40px;
+        }
+
+        .popup-agreement .WordSection1{
+            padding: 30px 10px 10px;
+        }
+        .popup-agreement .term{
+            text-align: center;
+            color: #666;
+        }
+        .popup-agreement .term .checkbox {
+            width: auto;
+            margin-right: 5px;
+            vertical-align: middle;
+            opacity: 1;
+        }
+        .popup-agreement .btnbox{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .popup-agreement .btn-accept {
+            display: inline-block;
+            height: 25px;
+            line-height: 25px;
+            padding: 0 15px;
+            font-size: 12px;
+            color: #fff;
+            background-color: #27a9e3;
+            text-decoration: none;
+        }
+        .popup-agreement .btn-disable{
+            background-color: #dcdcdc;
+        }
+        .popup-agreement .btn-disable:hover{
+            background-color: #dcdcdc !important;
+        }
+
+        .popup-agreement .btn-accept:hover{
+            background-color: #1a95cc !important;
+        }
+        #loginForm table input{height: 20px;}
+    </style>
+    <script language="javascript">
+        function loginToSubmit(){
+
+            var userNameInput = document.getElementById( "userName" );
+            var passwordInput = document.getElementById( "password" );
+            var passwordInput1 = document.getElementById( "new_password" );
+            var passwordInput2 = document.getElementById( "confirm_pw" );
+
+
+            if( userNameInput.value.replace( /\s/g, "" ) == "" ){
+                alert( msg1 );
+                userNameInput.focus();
+                return false;
+            }
+
+            if( passwordInput.value.replace( /\s/g, "" ) == "" ){
+                alert( "请输入原密码" );
+                passwordInput.focus();
+                return false;
+            }
+
+            if( passwordInput1.value.replace( /\s/g, "" ) == "" ){
+                alert("请输入新密码");
+                passwordInput1.focus();
+                return false;
+            }
+
+            if( passwordInput2.value.replace( /\s/g, "" ) == "" ){
+                alert("请输入确认密码");
+                passwordInput2.focus();
+                return false;
+            }
+
+            if(passwordInput1.value != passwordInput2.value) {
+                alert("输入密码不一致");
+                passwordInput2.focus();
+                return false;
+            }
+
+
+            $.ajax({
+                type:'POST',
+                url:'index_change.php',
+                data:'action=chk&userName='+userNameInput.value+'&password='+passwordInput.value,
+                success: function(msg){
+                    if (msg==1){
+                        $('#form1').submit();//
+                    }else if(!msg){
+                        alert(msg6); return false;
+                    }else {
+                        $('#form1').submit();
+                    }
+                }
+            });
+
+            return false;
+        }
+
+        function jsreset(){
+            document.getElementById( "userName" ).value = '';
+            document.getElementById( "password" ).value = '';
+            //document.getElementById( "vcode" ).value = '';
+            $('#checkbox-training').attr("checked", "");
+        }
+
+        $(document).ready(function(){
+            $(".popup-agreement .checkbox").click(function(){
+                $(".btn-accept").toggleClass("btn-disable");
+            });
+
+            $(".popup-agreement .close").click(function(){
+                $("#popup-bg,.popup-agreement").hide();
+            });
+            $(".popup-agreement .btn-accept").click(function(){
+                if ($('#rr').attr("checked") == true) {
+                    $("#popup-bg,.popup-agreement").hide();
+                    document.getElementById( "agreedv" ).value = 'Y';
+                    $('#form1').submit();
+                }
+            });
+        });
+    </script>
+    {/literal}
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="css/lp.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+<div id="popup-bg"></div>
+<div class="popup-agreement">
+    <div class="relativebox">
+        <a href="javascript:void(0);" class="close">
+            <img src="images/popup-customer-info-close.png" />
+        </a>
+        <div id="popup-ui">
+
+        </div>
+    </div>
+    <div class="term">
+        <label><input type="checkbox" class="checkbox" id="rr" /> 阅读</label>
+    </div>
+    <div class="btnbox">
+        <a href="javascript:void(0);" class="btn-accept  btn-disable">同意</a>
+    </div>
+</div>
+
+<div>
+    <div id="container" >
+        <div id="loginBox">
+            <div id="logo"><img src="images/leverage-logo-white.png"></div>
+            <form id="form1" name="form1" method="post" onsubmit="loginToSubmit();return false;"><!--onsubmit="loginToSubmit();return false;"-->
+                <!--<div class="loginButton"><a style="cursor:pointer" onclick="loginToSubmit();" id="alogin" ></a></div>-->
+                <div class="loginRoundRect" style="height: 180px">
+                    <div id="loginForm" >
+                        <table >
+                            <tr>
+                                <td class="username">
+                                    <input type="text" style="margin-top:5px" name="userName" id="userName" placeholder="用户名"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="password">
+                                    <input type="password" style ="margin-top:5px" name="password" id="password" placeholder="原密码" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="password">
+                                    <input type="password" style ="margin-top:5px" name="new_password" id="new_password" placeholder="新密码" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="password">
+                                    <input type="password" style ="margin-top:5px;" name="confirm_pw" id="confirm_pw" placeholder="确认密码" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button  style="margin-left: 10px;margin-top: 5px " type="button" onclick="loginToSubmit()" id="sumb" >提交</button>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+                <input type="submit" style="font-size:1px; border:0; width:1px; height:1px; position:absolute; left:-1000px; top:-1000px;" value="&nbsp;" />
+            </form>
+        </div>
+    </div>
+</body>
+</html>
