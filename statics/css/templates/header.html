@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <meta name="description" content="Leverage Point">
+    <meta name="author" content="Isaac Vigil">
+<!--左右的css和js-->
+    <link href="images/favicon.ico" type="image/ico" rel="shortcut icon" />
+    <link href="css/base.css" type="text/css" rel="stylesheet" />
+    <link href="css/index.css" type="text/css" rel="stylesheet" />
+    <link href="css/weixin.css" type="text/css" rel="stylesheet" />
+    <!--<link href="css/layer.css" type="text/css" rel="stylesheet" />-->
+
+
+
+    <!-- Css -->
+    <link rel="stylesheet" href="lp2/css/normalize.css">
+    <link rel="stylesheet" href="lp2/css/cutegrids.css">
+    <link rel="stylesheet" href="lp2/css/main.css?v=003">
+    <!--<link rel="stylesheet" href="lp2/css/jquery-confirm.css">-->
+    <link href='/lp2/css/css?family=PT+Sans:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+    <!-- Javascript -->
+
+    <script type="text/javascript" src="lp2/javascript/jquery-latest.min.js"></script>
+
+    <script src="js/layer.js" type="text/javascript"></script>
+    <script src="js/common.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="lp2/javascript/main.js"></script>
+    <script type="text/javascript" src="/js/DatePicker/WdatePicker.js"></script>
+
+    <!-- Css Javascript Resources -->
+
+    <script src="/js/audiojs/audio.min.js?v={$version}"></script>
+    <script type="text/javascript">
+        var myDate = new Date();
+        var yDate = myDate.getFullYear()+'-' + (parseInt(myDate.getMonth())+1) + '-' + (myDate.getDate());
+    </script>
+    <script  type="text/javascript">
+        $(document).ready(function() {
+            $('.huizong').click(function() {
+                var mon = prompt("请以xxxx/xx格式输入年月(1输成01)", ""); //将输入的内容赋给变量 name ，
+
+                //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
+                if (mon)//如果返回的有内容
+                {
+                    alert("欢迎您：" + mon)
+                }else {
+                    alert("输入框不能为空");
+                }
+
+            })
+
+
+        });
+    </script>
+
+</head>
+<body>
+
+<section id="header" style="width: auto;">
+    <ul>
+        <li><a href="javascript:none;"><img src="lp2/images/admin2/leverage-logo-white-small.png"/></a></li>
+        <!--<li><a href="upload.php">上传文件</a></li>
+        <li><a href="members.php">编辑请假加班补卡</a></li>
+        <li><a href="">报表</a>
+        <ul>
+            <li class="huizong"><a href="javascript:void(0)">考勤汇总表</a></li>
+            <li class="ask">个人请假明细表</li>
+            <li class="ot">个人加班明细表</li>
+            <li class="mu">个人补卡明细表</li>
+        </ul>
+        </li>-->
+
+
+        <li id="account">
+            {if $smarty.session.login_name_kq}
+            <a style="margin-right: 5px;font-size: 14px">{$smarty.session.login_name_kq}</a>
+            {/if}
+            <a href="index.php?action=logout"  style="font-size: 14px">退出</a>
+        </li>
+    </ul>
+</section>
+
+

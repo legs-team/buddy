@@ -1,0 +1,106 @@
+{include file='header.html'}
+{include file='left.html'}
+<div id="main" class="pad-top" style="margin-top: -750px;font-size: 16px">
+    <div class="cute-12-phone"><a onclick="history.go(-1);" style="cursor:pointer" class="cute-12-phone back-button">{$lang.global_back}</a></div>
+    <form id="account-form" class="cute-12-phone" action="" method="post" onsubmit="return chkfrm()">
+        <!--<div class="cute-4-phone">
+            <select name="oinfo[group_id]" >
+                <option value="41">研发部</option>
+                &lt;!&ndash;<option value="36" {if $operator.group_id == 36} selected="selected" {/if}>{$lang.team_leader}</option>&ndash;&gt;
+                <option value="33" >市场部</option>
+            </select>
+        </div>-->
+        <p style="font-size: 20px">补卡人：{$member_name}</p>
+        <div class="cute-2-phone"><label>日期</label></div>
+
+        <div class="cute-4-phone">
+            <input name="mu_info[date]"  id="date" onclick="{literal}WdatePicker({skin:'whyGreen',lang:'en'}){/literal}" value="{$mu_info.date}" />
+        </div>
+
+        <div class="cute-2-phone"><label>卡点</label></div>
+        <div class="cute-4-phone">
+            <input name="mu_info[card_point]" id="card_point" onclick="{literal}WdatePicker({skin:'whyGreen',dateFmt:'HH:mm',lang:'en'}){/literal}" value="{$mu_info.card_point}"/>
+        </div>
+
+        <div class="cute-2-phone"><label>补签事由</label></div>
+        <div class="cute-4-phone" style="right: 520px">
+            <input name="mu_info[reason]" id="reason"  type="text" value="忘记打卡"/>
+        </div>
+
+
+        <br class="clear">
+
+        <input type="button" class="cute-6-phone cancel-button" value="{$lang.global_cancel}" onclick="history.go(-1);">
+        <input type="submit" class="cute-6-phone accept-button" value="{$lang.global_save}">
+
+    </form>
+
+    <script language="javascript">
+        var user_id = '{$operator.id}';
+        var msg4 = '{$lang.contact_msg1}';
+        var msg5 = '{$lang.contact_msg2}';
+        var msg7 = '{$lang.password_msg}';
+        var operator_id = '{$operator.id}';
+
+    </script>
+    {literal}
+    <script language="javascript">
+        function chkfrm(){
+
+            if($('#date').val()==''){
+                alert("开始日期不能为空");
+                return false;
+            }
+
+            if($('#card_point').val()==''){
+                alert("卡点不能为空");
+                return false;
+            }
+
+            if($('#reason').val()==''){
+                alert("补签事由不能为空");
+                return false;
+            }
+
+            return true;
+        }
+
+
+        $(document).ready(function() {
+            $('#first_name').bind('change',function(){
+                var login_name = $(this).val();
+                login_name = $('#last_name').val()?login_name+'_'+$('#last_name').val():login_name;
+                $('#login_name').val(login_name);
+
+            });
+
+            $('#last_name').bind('change',function(){
+                var login_name = $(this).val();
+                login_name = $('#first_name').val()?$('#first_name').val()+'_'+login_name:login_name;
+                $('#login_name').val(login_name);
+            });
+
+            $('#first_name,#last_name').bind('change',function(){
+                var login_name = $('#first_name').val();
+                login_name = $('#last_name').val()?login_name+'_'+$('#last_name').val():login_name;
+                user_number(login_name);
+            })
+        });
+        function user_number(uname){
+            uname = uname.replace( /\s*$/g,"");
+            if(uname=='')
+                return;
+            $.ajax({
+                type:'GET',
+                url:'user.php',
+                data:'action=getuseno&uname='+uname+'&user_id='+user_id,
+                success: function(number){
+                    if(number > 0) {
+                        //$('#usermsg').html(uname+'_'+number);
+                        $('#login_name').val(uname+'_'+number);
+                    }
+                }
+            });
+        }
+    </script>
+    {/literal}

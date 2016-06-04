@@ -1,0 +1,245 @@
+<!--<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>表格编辑</title>
+    <meta name="description" content="Leverage Point">
+    <meta name="author" content="Isaac Vigil">
+
+    &lt;!&ndash; Css &ndash;&gt;
+    <link rel="stylesheet" href="lp2/css/normalize.css">
+    <link rel="stylesheet" href="lp2/css/cutegrids.css">
+    <link rel="stylesheet" href="lp2/css/main.css?v=003">
+    <link href='/lp2/css/css?family=PT+Sans:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+    &lt;!&ndash; Javascript &ndash;&gt;
+
+    <script type="text/javascript" src="lp2/javascript/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="lp2/javascript/main.js"></script>
+    <script type="text/javascript" src="/js/DatePicker/WdatePicker.js"></script>
+
+    &lt;!&ndash; Css Javascript Resources &ndash;&gt;
+
+    <script src="/js/audiojs/audio.min.js?v={$version}"></script>
+    <script type="text/javascript">
+        var myDate = new Date();
+        var yDate = myDate.getFullYear()+'-' + (parseInt(myDate.getMonth())+1) + '-' + (myDate.getDate());
+    </script>
+
+</head>
+<body>-->
+{include file="header.html"}
+{include file="left.html"}
+<title>编辑请假加班补卡</title>
+<div id="main" class="live-monitoring" style="margin-top: -750px;font-size: 16px">
+    <div class="cute-12-phone">
+        <h1 class="cute-12-phone" >员工列表</h1>
+        <br class="clear" />
+
+        <!--<form name="generate" action="generate.php?action=mu" method="post" onclick="dianji()">
+            <div class="cute-2-phone">
+                <input  type="text" name="mon"  placeholder="请输入XXXX/XX"/>
+                <input type="submit" value="生成补卡汇总表" />
+            </div>
+        </form>
+
+        <form name="generate" action="generate.php?action=ot" method="post" onclick="dianji()" >
+            <div class="cute-2-phone">
+                <input  type="text" name="mon"  placeholder="请输入XXXX/XX"/>
+                <input type="submit" value="生成加班汇总表" />
+            </div>
+        </form>
+
+        <form name="generate" action="generate.php?action=ask" method="post" onclick="dianji()" >
+            <div class="cute-2-phone">
+                <input  type="text" name="mon"  placeholder="请输入XXXX/XX"/>
+                <input type="submit" value="生成请假汇总表" />
+            </div>
+        </form>-->
+
+
+        <form name="callList">
+            <!--<input type="hidden" name="page" id="page" value="{$page}" />
+            <input type="hidden" name="entries" value="{$entries}" />-->
+
+            <div class="cute-2-phone" style="float: left">
+                <select name="members" onchange="searchSubmit()">
+                    <option value="">{$lang.all_members}</option>
+                    {section name=member loop=$membersList}
+                    <option value="{$membersList[member].login_name}" {if $members == $membersList[member].login_name} selected="selected" {/if}>{$membersList[member].login_name}</option>
+                    {/section}
+                </select>
+            </div>
+
+
+
+        <ul class="results-list call-history-list">
+            <li class="list-titles">
+                <ul>
+
+                    <li class="cute-1-phone" >{$lang.attendance_id}</li>
+                    <li class="cute-1-phone" style="margin-left: -30px;">{$lang.login_name}</li>
+                    <li class="cute-1-phone" style="margin-left: -20px;">请假明细</li>
+                    <li class="cute-1-phone" style="margin-left: -10px;">加班明细</li>
+                    <li class="cute-1-phone" style="margin-left: -20px;">补卡明细</li>
+                    <li class="cute-1-phone" style="margin-left: -15px;">新增请假</li>
+                    <li class="cute-1-phone" style="margin-left: -15px;">新增加班</li>
+                    <li class="cute-1-phone" style="right: 50px;">新增补卡</li>
+                </ul>
+
+            </li>
+            {foreach item=members from=$mlist}
+            <li>
+                <ul>
+
+                    <li class="cute-1-phone" >{$members.attendance_id}</li>
+                    <li class="cute-1-phone" style="margin-left: -40px;">{$members.login_name}</li>
+                    <li class="cute-1-phone" style="margin-left: -15px;"><a href="members.php?action=check&member_id={$members.attendance_id}" >查看</a></li>
+                    <li class="cute-1-phone" style="margin-left: -10px;"><a href="members.php?action=check_ot&member_id={$members.attendance_id}">查看</a></li>
+                    <!--<li class="cute-1-phone" style="word-wrap: break-word;">{$call.campaign_name} </li>-->
+                    <li class="cute-1-phone" style="margin-left: -10px;"><a href="members.php?action=check_mu&member_id={$members.attendance_id}">查看</a></li>
+                    <li class="cute-1-phone" style="right:100px">
+                        <a href="members.php?action=edit&member_id={$members.attendance_id}" class="edit-link">&nbsp;</a>
+                    </li>
+                    <li class="cute-1-phone" style="right:100px">
+                        <a href="members.php?action=edit_ot&member_id={$members.attendance_id}" class="edit-link">&nbsp;</a>
+                    </li>
+                    <li class="cute-1-phone" style="right:120px">
+                        <a href="members.php?action=edit_mu&member_id={$members.attendance_id}" class="edit-link">&nbsp;</a>
+                    </li>
+
+                </ul>
+            </li>
+            {/foreach}
+
+        </ul>
+        <form action="members.php">
+            <!--<input type="hidden" name="login_name" value="{$login_name}" />
+
+            <input type="hidden" name="is_normal" value="{$is_normal}" />
+            <input type="hidden" name="is_late" value="{$is_late}" />
+            <input type="hidden" name="is_leave_early" value="{$is_leave_early}" />
+            <input type="hidden" name="is_overtime" value="{$is_overtime}" />
+            <input type="hidden" name="start_date" value="{$start_date}" />
+            <input type="hidden" name="end_date" value="{$end_date}" />-->
+
+            <input type="hidden" id="pageTotal" value="{$total_number|default:0}" />
+            <section class="cute-7-phone"><h2 class="cute-12-phone">{$lang.page_total} {$total_number|default:0} {$lang.page_call_history}</h2></section>
+            <section class="cute-5-phone navigation">
+                <a class="next-button" href="javascript:">&nbsp;</a>
+                <input name="page" value="{$page}" min="1" type="number" class="page-selector" onchange="$(this).parents('form').submit();"/>
+                <a class="prev-button" href="javascript:">&nbsp;</a>
+                <select name="entries" onchange="$('input[name=page]').val(1);$(this).parents('form').submit();">
+                    <option value="30" >30 {$lang.entries}</option>
+                    <option value="50" {if $entries == 50} selected="selected" {/if}>50 {$lang.entries}</option>
+                    <option value="100" {if $entries == 100} selected="selected" {/if}>100 {$lang.entries}</option>
+                    <option value="150" {if $entries == 150} selected="selected" {/if}>150 {$lang.entries}</option>
+                </select>
+            </section>
+        </form>
+    </div>
+
+</body>
+</html>
+
+{literal}
+<script language="javascript">
+
+
+    function searchSubmit(){
+        $('input[name=page]').val(1);
+        $('form[name=callList]').submit();
+    }
+
+    var start_index = 0;
+    var end_index = -1;
+    function time_to_int(time) {
+        var arr = time.split(":");
+        var min = parseInt(arr[0]);
+        var sec = parseInt(arr[1]);
+
+        var total = min*60+sec;
+        return parseInt(total);
+    }
+    $(document).ready(function() {
+
+        $(document).bind('click',function(e){
+
+            var container = $(".sub-menu, .add_more_menu_link");
+            if (!container.is(e.target)&& container.has(e.target).length === 0) {
+                $("li").removeClass('on');
+            }
+        });
+
+        $(".popup-box").on("click",function(e){
+            return false;
+        });
+
+        $(".recording").on("click",function(e){
+            e.preventDefault();
+            var text = $(this).parent().parent().find('em.played');
+
+            if(!$(this).parent().siblings('.audiojs').hasClass('playing'))
+                return false;
+
+            if($(this).hasClass('start_record'))
+            {
+                $(this).attr('title',end_cutting);
+                start_index = time_to_int(text.text());
+                $("input[name=start_index]").val(start_index);
+                $(this).removeClass('start_record').addClass('end_record');
+                return false;
+            }else
+            {
+                $(this).attr('title',start_cutting);
+                end_index = time_to_int(text.text());
+
+                $(this).removeClass('end_record').addClass('start_record');
+                $("input[name=end_index]").val(end_index);
+                $(this).parents('form[name=record]').submit();
+            }
+
+        });
+
+        $("a.add_more_menu_link").click(function(){
+
+            var $ul = $(this).closest('ul');
+            var $li = $ul.parent();
+            $li.toggleClass('on').siblings().removeClass('on');
+            $ul.next('ul').css({"right":"11px","margin-top":$li.height()});
+        });
+
+        $('li.listen-btn').click(function(){
+
+            var btn_link=$(this).find('.sub-menu-icon');
+            btn_link.siblings('.play-call-record').toggleClass('play-hidden');
+
+            var sibelem = btn_link.siblings('div');
+            var voice = btn_link.attr('voice');
+            if(sibelem.find('.audiojs').length>0)
+                return false;
+            var that = sibelem.find('audio');
+            that.attr("src",voice);
+
+            if(window.audiojs){
+                audiojs.create(that);
+            }
+
+        });
+
+        $('.next-button').bind('click',function(){
+            if (parseInt($('input[name=page]').val()) * parseInt($('input[name=entries]').val()) < parseInt($('#pageTotal').val())) {
+                $('input[name=page]').val( parseInt($('input[name=page]').val())+1 );
+                $(this).parents('form').submit();
+            }
+        })
+        $('.prev-button').bind('click',function(){
+            var page = parseInt($('input[name=page]').val());
+            if(page > 1){
+                $('input[name=page]').val(page-1)
+                $(this).parents('form').submit();
+            }
+        })
+    });
+</script>
+{/literal}

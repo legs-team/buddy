@@ -1,0 +1,152 @@
+{include file='header.html'}
+{include file='left.html'}
+<div id="main" class="pad-top" style="margin-top: -750px;font-size: 16px">
+    <div class="cute-12-phone"><a onclick="history.go(-1);" style="cursor:pointer" class="cute-12-phone back-button">{$lang.global_back}</a></div>
+    <form id="account-form" class="cute-12-phone" action="" method="post" onsubmit="return chkfrm()">
+
+        <p style="font-size: 20px">{$member_name}</p>
+        <div class="cute-2-phone"><label>应出勤</label></div>
+
+        <div class="cute-4-phone">
+            <input name="yuefen_info[should_attend]"  id="should_attend" type="text" value="{$yuefen_info.should_attend}" />
+        </div>
+
+        <div class="cute-2-phone"><label>实出勤</label></div>
+
+        <div class="cute-4-phone">
+            <input name="yuefen_info[actual_attend]"   id="actual_attend" type="text" value="{$yuefen_info.actual_attend}" />
+        </div>
+
+        <div class="cute-2-phone"><label>累计请假(天)</label></div>
+
+        <div class="cute-4-phone">
+            <input name="yuefen_info[total_qingjia]"   id="total_qingjia" type="text" value="{$yuefen_info.total_qingjia}" />
+        </div>
+
+        <div class="cute-2-phone"><label>累计加班(时)</label></div>
+
+        <div class="cute-4-phone">
+            <input name="yuefen_info[total_overtime]"   id="total_overtime" type="text" value="{$yuefen_info.total_overtime}" />
+        </div>
+
+        <div class="cute-2-phone"><label>累计调休(时)</label></div>
+
+        <div class="cute-4-phone">
+            <input name="yuefen_info[tiaoxiu]"   id="tiaoxiu" type="text" value="{$yuefen_info.tiaoxiu}" />
+        </div>
+
+        <div class="cute-2-phone"><label>剩余(时)</label></div>
+
+        <div class="cute-4-phone">
+            <input name="yuefen_info[shengyu]"   id="shengyu" type="text" value="{$yuefen_info.shengyu}" />
+        </div>
+
+        <div class="cute-2-phone"><label>迟到早退(分)</label></div>
+
+        <div class="cute-4-phone">
+            <input name="yuefen_info[total_leave]"   id="total_leave" type="text" value="{$yuefen_info.total_leave}" />
+        </div>
+
+        <div class="cute-2-phone"><label>旷工(天)</label></div>
+
+        <div class="cute-4-phone">
+            <input name="yuefen_info[out_of_work]"  id="out_of_work"  type="text" value="{$yuefen_info.out_of_work}" />
+        </div>
+
+        <div class="cute-2-phone"><label>补卡</label></div>
+
+        <div class="cute-4-phone">
+            <input name="yuefen_info[make_up]"   id="make_up" type="text" value="{$yuefen_info.make_up}" />
+        </div>
+
+        <div class="cute-2-phone" ><label>时间</label></div>
+
+        <div class="cute-4-phone">
+            <input name="yuefen_info[time]" onclick="{literal}WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM',lang:'en'}){/literal}"  value="{$yuefen_info.time}"/>
+        </div>
+        
+        <br class="clear">
+
+        <input type="button" class="cute-6-phone cancel-button" value="{$lang.global_cancel}" onclick="history.go(-1);">
+        <input type="submit" class="cute-6-phone accept-button" value="{$lang.global_save}">
+
+    </form>
+
+    <script language="javascript">
+        var user_id = '{$operator.id}';
+        var msg4 = '{$lang.contact_msg1}';
+        var msg5 = '{$lang.contact_msg2}';
+        var msg7 = '{$lang.password_msg}';
+        var operator_id = '{$operator.id}';
+
+    </script>
+    {literal}
+    <script language="javascript">
+        function chkfrm(){
+            if($('#should_attend').val()==''){
+                alert("应出勤不能为空");
+                return false;
+            }
+            if($('#actual_attend').val()==''){
+                alert("实出勤不能为空");
+                return false;
+            }
+            if($('#start_time').val()==''){
+                alert("开始时间不能为空");
+                return false;
+            }
+            if($('#end_date').val()==''){
+                alert("结束日期不能为空");
+                return false;
+            }
+            if($('#end_time').val()==''){
+                alert("结束时间不能为空");
+                return false;
+            }
+            if($('#time').val()==''){
+                alert("时长不能为空");
+                return false;
+            }
+
+            return true;
+        }
+
+
+        $(document).ready(function() {
+            $('#first_name').bind('change',function(){
+                var login_name = $(this).val();
+                login_name = $('#last_name').val()?login_name+'_'+$('#last_name').val():login_name;
+                $('#login_name').val(login_name);
+
+            });
+
+            $('#last_name').bind('change',function(){
+                var login_name = $(this).val();
+                login_name = $('#first_name').val()?$('#first_name').val()+'_'+login_name:login_name;
+                $('#login_name').val(login_name);
+            });
+
+            $('#first_name,#last_name').bind('change',function(){
+                var login_name = $('#first_name').val();
+                login_name = $('#last_name').val()?login_name+'_'+$('#last_name').val():login_name;
+                user_number(login_name);
+            })
+        });
+        function user_number(uname){
+            uname = uname.replace( /\s*$/g,"");
+            if(uname=='')
+                return;
+            $.ajax({
+                type:'GET',
+                url:'user.php',
+                data:'action=getuseno&uname='+uname+'&user_id='+user_id,
+                success: function(number){
+                    if(number > 0) {
+                        //$('#usermsg').html(uname+'_'+number);
+                        $('#login_name').val(uname+'_'+number);
+                    }
+                }
+            });
+        }
+    </script>
+    {/literal}

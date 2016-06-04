@@ -1,0 +1,47 @@
+<div class="content">
+
+    <!-- 左边菜单 开始 -->
+    <div class="left_box" style="margin-left:-40px">
+        <div class="menu">
+            <ul class="u_out">
+                {if $smarty.session.is_admin_kq==1}
+                <li><a href="upload.php" class="icon_10">上传文件</a></li>
+                <li><a href="attendList.php" class="icon_10">查看考勤列表记录</a></li>
+                <li><a href="members.php" class="icon_10">编辑请假加班补卡</a></li>
+
+                <li>
+                    <a href="javascript:void(0)" class="icon_10">报表</a>
+
+                    <!-- 二级菜单 开始 -->
+                    <ul class="u_inner">
+                        <li><a href="members.php?action=yuefen_huizong">考勤汇总表</a></li>
+                        <li><a href="members.php?action=qingjia_huizong">请假汇总表</a></li>
+                        <li><a href="members.php?action=ot_huizong">加班汇总表</a></li>
+                        <li><a href="members.php?action=mu_huizong ">补卡汇总表</a></li>
+                    </ul>
+
+                    <!-- 二级菜单 end -->
+
+                </li>
+                {/if}
+                {if $smarty.session.is_admin_kq==0}
+                <li><a href="personalList.php" class="icon_10">个人考勤记录</a></li>
+                <li>
+                    <a href="javascript:void(0)" class="icon_10">个人列表</a>
+
+                    <!-- 二级菜单 开始 -->
+                    <ul class="u_inner">
+                        <li><a href="personal_members.php?action=check_huizong">汇总表</a></li>
+                        <li><a href="personal_members.php?action=check">请假明细</a></li>
+                        <li><a href="personal_members.php?action=check_ot">加班明细</a></li>
+                        <li><a href="personal_members.php?action=check_mu">补卡明细</a></li>
+                    </ul>
+
+                    <!-- 二级菜单 end -->
+
+                </li>
+                {/if}
+            </ul>
+        </div>
+    </div>
+</div>

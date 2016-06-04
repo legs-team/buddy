@@ -1,0 +1,30 @@
+{include file='header.html'}
+{include file='left.html'}
+<title>生成考勤汇总表</title>
+<form name="generate" action="generate.php?action=huizong" method="post" onsubmit="return chkfrm()" style="font-size: 16px;">
+
+    <div style="margin-top: -500px;float: left;margin-left: 600px">
+        <p >请输入年月，格式为XXXX/XX (个位数的月份也要输成两位，比如1输成01)</p>
+        <input id="shuru" type="text" name="mon" placeholder="请输入年月" style="width: 200px;margin-left: 100px"/>
+        <input type="submit" value="生成月份汇总表" style="width: 150px;margin-top: 10px"/>
+    </div>
+</form>
+<body>
+<html>
+
+{literal}
+<script language="javascript">
+
+    function chkfrm() {
+        var shuru = document.getElementById( "shuru" );
+        if(shuru.value.replace( /\s/g, "" ) == "") {
+            alert("年月不能为空，请输入年月");
+            return false;
+        }
+        setTimeout( function(){
+            location.reload();
+        },2000);
+        return true;
+    }
+</script>
+{/literal}
